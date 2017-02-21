@@ -1,0 +1,9 @@
+Origin: Your project name
+Label: Your project name
+Codename: <osrelease>
+Architectures: i386 amd64
+Components: main
+Description: Apt repository for project x
+SignWith: <key-id>
+DebOverride: override.<osrelease>
+DscOverride: override.<osrelease>

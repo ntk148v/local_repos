@@ -1,0 +1,12 @@
+os/x86_64
+updates/x86_64
+cloud/x86_64/openstack-kilo
+cloud/x86_64/openstack-liberty
+cloud/x86_64/openstack-mitaka
+cloud/x86_64/openstack-newton
+virt/x86_64/kvm-common
+virt/x86_64/xen
+virt/x86_64/xen-46
+virt/x86_64/ovirt-4.0
+virt/x86_64/ovirt-3.6
+virt/x86_64/ovirt-3.5
