@@ -36,7 +36,7 @@ install_ubuntu_keyring()
 	echo "***************************************************************************"
 	wget http://pa.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2016.10.27.tar.gz
 	tar -xvf ubuntu-keyring_2016.10.27.tar.gz
-	mv ubuntu-keyring_2016.10.27/ ubuntu-keyring/
+	mv ubuntu-keyring-2016.10.27/ ubuntu-keyring/
 	mkdir -p /root/keyrings/ubuntu/
 	gpg --no-default-keyring --keyring /root/keyrings/ubuntu/trustedkeys.gpg --import ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
 }
@@ -48,7 +48,7 @@ install_ubuntu_cloud_keyring()
 	echo "***************************************************************************"
 	wget https://launchpad.net/ubuntu/+archive/primary/+files/ubuntu-cloud-keyring_2012.08.14.tar.gz
 	tar -xvf ubuntu-cloud-keyring_2012.08.14.tar.gz
-	mv ubuntu-cloud-keyring_2012.08.14/ ubuntu-cloud-keyring/
+	mv ubuntu-cloud-keyring-2012.08.14/ ubuntu-cloud-keyring/
 	mkdir -p /root/keyrings/ubuntu_cloud/
 	gpg --no-default-keyring --keyring /root/keyrings/ubuntu_cloud/trustedkeys.gpg --import ubuntu-cloud-keyring/keyrings/ubuntu-cloud-keyring.gpg
 }
@@ -136,8 +136,8 @@ main()
 	schedule_job
 	echo "*******************************************************************************************"
 	echo "                 Done! Now you can install package using this repository              	 "
-	echo "**Set up client side: 															         " 
- 	echo "echo \"deb http://YOUR_REPO_SERVER/repos/ubuntu <osrelease> main\" >> /etc/apt/sources.list"  
+	echo "**Set up client side: 															         "
+ 	echo "echo \"deb http://YOUR_REPO_SERVER/repos/ubuntu <osrelease> main\" >> /etc/apt/sources.list"
  	echo "apt-get update && apt-get install YOUR_PACKAGE  											 "
 	echo "*******************************************************************************************"
 }
