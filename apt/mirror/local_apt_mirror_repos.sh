@@ -34,9 +34,9 @@ install_ubuntu_keyring()
 	echo "***************************************************************************"
 	echo "                 Install and import ubuntu keyring                         "
 	echo "***************************************************************************"
-	wget http://pa.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2016.10.27.tar.gz
-	tar -xvf ubuntu-keyring_2016.10.27.tar.gz
-	mv ubuntu-keyring-2016.10.27/ ubuntu-keyring/
+	wget http://pa.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2012.05.19.tar.gz
+	tar -xvf ubuntu-keyring_2012.05.19.tar.gz
+	mv ubuntu-keyring-2012.05.19/ ubuntu-keyring/
 	mkdir -p /root/keyrings/ubuntu/
 	gpg --no-default-keyring --keyring /root/keyrings/ubuntu/trustedkeys.gpg --import ./ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
 }
