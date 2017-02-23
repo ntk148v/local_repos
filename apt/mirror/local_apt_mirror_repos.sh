@@ -87,7 +87,7 @@ apt_repos_mirroring()
 
 cloud_apt_repos_mirroring()
 {
-	install_ubuntu_keyring
+	install_ubuntu_cloud_keyring
 	mkdir -p /var/www/html/repos/cloud/
 	chmod +x cloud_apt_repos_mirroring.sh
 	while true
