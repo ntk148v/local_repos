@@ -38,7 +38,7 @@ install_ubuntu_keyring()
 	tar -xvf ubuntu-keyring_2016.10.27.tar.gz
 	mv ubuntu-keyring-2016.10.27/ ubuntu-keyring/
 	mkdir -p /root/keyrings/ubuntu/
-	gpg --no-default-keyring --keyring /root/keyrings/ubuntu/trustedkeys.gpg --import ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
+	gpg --no-default-keyring --keyring /root/keyrings/ubuntu/trustedkeys.gpg --import ./ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
 }
 
 install_ubuntu_cloud_keyring()
@@ -50,7 +50,7 @@ install_ubuntu_cloud_keyring()
 	tar -xvf ubuntu-cloud-keyring_2012.08.14.tar.gz
 	mv ubuntu-cloud-keyring-2012.08.14/ ubuntu-cloud-keyring/
 	mkdir -p /root/keyrings/ubuntu_cloud/
-	gpg --no-default-keyring --keyring /root/keyrings/ubuntu_cloud/trustedkeys.gpg --import ubuntu-cloud-keyring/keyrings/ubuntu-cloud-keyring.gpg
+	gpg --no-default-keyring --keyring /root/keyrings/ubuntu_cloud/trustedkeys.gpg --import ./ubuntu-cloud-keyring/keyrings/ubuntu-cloud-keyring.gpg
 }
 
 apt_repos_mirroring()
@@ -78,7 +78,7 @@ apt_repos_mirroring()
 			break
 		else
 			echo "*********************************************************************************"
-			echo "                                ERROR!                                           "
+			echo "                    ERROR! Mirroring apt repository failed                       "
 			echo "*********************************************************************************"
 			pause_error
 		fi
@@ -110,7 +110,7 @@ cloud_apt_repos_mirroring()
 			break
 		else
 			echo "*********************************************************************************"
-			echo "                                ERROR!                                           "
+			echo "                  ERROR! Mirroring cloud apt repository failed                   "
 			echo "*********************************************************************************"
 			pause_error
 		fi
