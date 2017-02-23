@@ -13,7 +13,7 @@ section=main,multiverse,universe,restricted
 release=xenial,xenial-updates,xenial-security,xenial-backports,xenial-proposed
 
 # Server name, minus the protocol and the path at the end
-server=vn.archive.ubuntu.com
+server=opensource.xtdv.net
 
 # Path from the main server, so http://my.web.server/$dir, Server dependant
 inPath=/ubuntu
