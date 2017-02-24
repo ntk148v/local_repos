@@ -1,5 +1,5 @@
-Origin: Your project name
-Label: Your project name
+Origin: <yourprojectname>
+Label: <yourprojectname>
 Codename: <osrelease>
 Architectures: i386 amd64
 Components: main

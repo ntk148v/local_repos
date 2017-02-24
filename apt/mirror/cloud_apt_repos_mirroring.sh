@@ -10,9 +10,7 @@ arch=i386,amd64
 section=main
 
 # Release of the system (Quantal, Precise, etc)
-release=xenial-proposed/newton,xenial-updates/newton,trusty-updates/mitaka,trusty-updates/liberty,\
-        trusty-updates/kilo,trusty-updates/juno,trusty-proposed/liberty,trusty-proposed/kilo,\
-        trusty-proposed/juno,trusty-proposed/mitaka,
+release=xenial-proposed/newton,xenial-updates/newton,trusty-updates/mitaka,trusty-updates/liberty,trusty-updates/kilo,trusty-updates/juno,trusty-proposed/liberty,trusty-proposed/kilo,trusty-proposed/juno,trusty-proposed/mitaka
 
 # Server name, minus the protocol and the path at the end
 server=ubuntu-cloud.archive.canonical.com

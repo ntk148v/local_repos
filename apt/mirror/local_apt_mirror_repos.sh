@@ -37,8 +37,11 @@ install_ubuntu_keyring()
 	wget http://pa.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2012.05.19.tar.gz
 	tar -xvf ubuntu-keyring_2012.05.19.tar.gz
 	mv ubuntu-keyring-2012.05.19/ ubuntu-keyring/
-	mkdir -p /root/keyrings/ubuntu/
-	gpg --no-default-keyring --keyring /root/keyrings/ubuntu/trustedkeys.gpg --import ./ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
+	read -p "Enter directory path to storage trustedkeys.gpg(For e.x: /home/$USER/keyrings/ubuntu) and press [ENTER]: " UBUNTU_KEYRING
+	UBUNTU_KEYRING=${UBUNTU_KEYRING%/} 
+	#case $UBUNTU_KEYRING in *[!/]*/) UBUNTU_KEYRING=${UBUNTU_KEYRING%"${UBUNTU_KEYRING##*[!/]}"};; esac
+	mkdir -p $UBUNTU_KEYRING
+	gpg --no-default-keyring --keyring $UBUNTU_KEYRING/trustedkeys.gpg --import ./ubuntu-keyring/keyrings/ubuntu-archive-keyring.gpg
 }
 
 install_ubuntu_cloud_keyring()
@@ -49,8 +52,11 @@ install_ubuntu_cloud_keyring()
 	wget https://launchpad.net/ubuntu/+archive/primary/+files/ubuntu-cloud-keyring_2012.08.14.tar.gz
 	tar -xvf ubuntu-cloud-keyring_2012.08.14.tar.gz
 	mv ubuntu-cloud-keyring-2012.08.14/ ubuntu-cloud-keyring/
-	mkdir -p /root/keyrings/ubuntu_cloud/
-	gpg --no-default-keyring --keyring /root/keyrings/ubuntu_cloud/trustedkeys.gpg --import ./ubuntu-cloud-keyring/keyrings/ubuntu-cloud-keyring.gpg
+	read -p "Enter directory path to storage trustedkeys.gpg(For e.x: /home/$USER/keyrings/ubuntu_cloud) and press [ENTER]: " UBUNTU_CLOUD_KEYRING
+	UBUNTU_CLOUD_KEYRING=${UBUNTU_CLOUD_KEYRING%/} 
+	#case $UBUNTU_CLOUD_KEYRING in *[!/]*/) UBUNTU_CLOUD_KEYRING=${UBUNTU_CLOUD_KEYRING%"${UBUNTU_CLOUD_KEYRING##*[!/]}"};; esac
+	mkdir -p $UBUNTU_CLOUD_KEYRING
+	gpg --no-default-keyring --keyring UBUNTU_CLOUD_KEYRING/trustedkeys.gpg --import ./ubuntu-cloud-keyring/keyrings/ubuntu-cloud-keyring.gpg
 }
 
 apt_repos_mirroring()

@@ -51,7 +51,7 @@ configure_apache2()
 	# Repo name = owned, you can change it to whatever you want
 	# Company name for e.x.
 	mkdir -p /var/www/html/repos/owned/
-	cp owned_repos.conf /etc/apache2/conf-availabe/owned_repos.conf
+	cp owned_repos.conf /etc/apache2/conf-available/
 	a2enconf owned_repos
 	apache2ctl configtest
 	service apache2 restart
@@ -60,36 +60,24 @@ configure_apache2()
 configure_reprepro()
 {
 	mkdir -p /var/www/html/repos/owned/conf/
-	while true
-	do
-		echo "***************************************************************************"
-		echo "             Create /var/www/html/repos/owned/conf/distributions           "
-		echo "- Edit example_distributions with your editor                              "
-		echo "- Explain sections in that file:                                           "
-		echo "  + <osrelease> is an official Ubuntu release name (e.g. xenial or trusty) "
-		echo "  + <key-id> is the ID of the GnuPG key you generated. Open another        "
-		echo "    terminal, run:                                                         "
-		echo "    gpg --list-keys | awk '/^pub/ { print $2 }' | awk -F'/' '{print $2}'   "
-		echo "    Get this number and replace <key-id> with this                         "
-		echo "***************************************************************************"
-		sleep 15
-		read -p "Are you ready to config?(Y/n). 'Y' for edit, 'N' for read it again" -n 1 -r
-		echo    # (optional) move to a new line
-		if [[ $REPLY =~ ^[Yy]$ ]]
-		then
-			cp example_distributions /var/www/html/repos/owned/conf/distributions
-			nano /var/www/html/repos/owned/conf/distributions
-			break
-		else
-			sleep 10
-		fi
-	done
+	echo "***************************************************************************"
+	echo "             Create /var/www/html/repos/owned/conf/distributions           "
+	echo "***************************************************************************"
+	cp example_distributions /var/www/html/repos/owned/conf/distributions
+	read -p "* Enter <osrelease> is an official Ubuntu release name (e.g. xenial or trusty) and press [ENTER]: " OSRELEASE
+	sed -i "s/<osrelease>/$OSRELEASE/g" /var/www/html/repos/owned/conf/distributions
+	read -p "* Enter <yourprojectname> press [ENTER]: " PROJECTNAME
+	sed -i "s/<yourprojectname>/$PROJECTNAME/g" /var/www/html/repos/owned/conf/distributions
+	KEYID=$(gpg --list-keys | awk '/^pub/ { print $2 }' | awk -F'/' '{print $2}')
+	sed -i "s/<key-id>/$KEYID/g" /var/www/html/repos/owned/conf/distributions
 	cp example_options /var/www/html/repos/owned/conf/options
 }
 
 add_owned_pkg_to_repo()
 {
 	while true
+	do
+		cd /var/www/html/repos/owned/
 		echo "**********************************************************************************"
 		echo "Run command to add your package: reprepro includedeb <osrelease> <path-to-debfile>"
 		echo "**********************************************************************************"
@@ -101,8 +89,8 @@ add_owned_pkg_to_repo()
 
 			echo -n "Enter your package path and press [ENTER]: "
 			read package_path
-			osrelease=cat /var/www/html/repos/owned/conf/distributions | awk '/^Codename/ { print $2 }'
-			reprepro includedeb $osrelease $package_path
+			OSRELEASE=cat /var/www/html/repos/owned/conf/distributions | awk '/^Codename/ { print $2 }'
+			reprepro includedeb $OSRELEASE $package_path
 			if [ $? -eq 0 ]
 			then
 				echo "**********************************************************************************"
@@ -113,9 +101,11 @@ add_owned_pkg_to_repo()
 				echo "                               		ERROR                                       "
 				echo "**********************************************************************************"
 				pause_error
+			fi
 		else
 			break
 		fi
+	done
 }
 
 export_gnupg_keys()
