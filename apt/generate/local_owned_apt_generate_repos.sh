@@ -75,13 +75,12 @@ configure_reprepro()
 
 add_owned_pkg_to_repo()
 {
+	echo "**********************************************************************************"
+	echo "							Add owned pkg to repo 									"
+	echo "**********************************************************************************"
 	while true
 	do
 		cd /var/www/html/repos/owned/
-		echo "**********************************************************************************"
-		echo "							Add owned pkg to repo 									"
-		echo "**********************************************************************************"
-		sleep 5
 		read -p "Do you want to add more packages?(Y/n)" -n 1 -r
 		echo    # (optional) move to a new line
 		if [[ $REPLY =~ ^[Yy]$ ]]
