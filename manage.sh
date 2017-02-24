@@ -3,13 +3,11 @@
 choose_apt()
 {
 	echo "******************************************************************************************************"
-	read -e -p "                               Do you want setup APT/YUM repo?                                        " TYPE
+	read -e -p "Do you want setup APT/YUM repo?: " TYPE
 	echo "******************************************************************************************************"
 	case $TYPE in
 		"APT|Apt|apt")
-			echo "******************************************************************************************************"
-			read -e -p "                Setup local APT Repo. Choose your repo type (mirror/generate):                        " APT_TYPE
-			echo "******************************************************************************************************" 
+			read -e -p "Setup local APT Repo. Choose your repo type (mirror/generate):  " APT_TYPE
 			case $APT_TYPE in
 				"Mirror|MIRROR|mirror")
 					cd ./apt/mirror/
@@ -24,12 +22,12 @@ choose_apt()
 			esac
 			;;
 		"YUM|Yum|yum")
-			echo "******************************************************************************************************"
-			echo "                                       Setup local YUM Repo                                           "
-			echo "******************************************************************************************************"
+			echo "Setup local YUM Repo "
 			cd ./yum/
 			chmod +x local_yum_repos.sh
 			sudo ./local_yum_repos.sh
 			;;
 	esac
 }
+
+choose_apt
