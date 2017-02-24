@@ -3,7 +3,5 @@ Label: <yourprojectname>
 Codename: <osrelease>
 Architectures: i386 amd64
 Components: main
-Description: Apt repository for project x
+Description: Apt repository for project <yourprojectname>
 SignWith: <key-id>
-DebOverride: override.<osrelease>
-DscOverride: override.<osrelease>

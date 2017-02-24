@@ -79,7 +79,7 @@ add_owned_pkg_to_repo()
 	do
 		cd /var/www/html/repos/owned/
 		echo "**********************************************************************************"
-		echo "Run command to add your package: reprepro includedeb <osrelease> <path-to-debfile>"
+		echo "							Add owned pkg to repo 									"
 		echo "**********************************************************************************"
 		sleep 5
 		read -p "Do you want to add more packages?(Y/n)" -n 1 -r
@@ -89,7 +89,7 @@ add_owned_pkg_to_repo()
 
 			echo -n "Enter your package path and press [ENTER]: "
 			read package_path
-			OSRELEASE=cat /var/www/html/repos/owned/conf/distributions | awk '/^Codename/ { print $2 }'
+			OSRELEASE=$(cat /var/www/html/repos/owned/conf/distributions | awk '/^Codename/ { print $2 }')
 			reprepro includedeb $OSRELEASE $package_path
 			if [ $? -eq 0 ]
 			then

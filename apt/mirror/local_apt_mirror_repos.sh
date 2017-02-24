@@ -70,7 +70,7 @@ apt_repos_mirroring()
 		if [ $? -eq 0 ]
 		then
 			# Check system is using systemd or sysvinit
-			if [ pidof systemd > /dev/null ]
+			if pidof systemd > /dev/null
 			then
 				systemctl enable apache2.service
 				systemctl restart apache2.service
