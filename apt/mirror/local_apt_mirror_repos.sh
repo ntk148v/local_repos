@@ -125,6 +125,9 @@ cloud_apt_repos_mirroring()
 
 schedule_job()
 {
+	mkdir -p /root/scripts
+	cp apt_repos_mirroring.sh /root/scripts/
+	cp cloud_apt_repos_mirroring.sh /root/scripts
 	echo "***************************************************************************"
 	echo "                        Schedule job(Crontab)                              "
 	echo "***************************************************************************"
