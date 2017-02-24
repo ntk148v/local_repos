@@ -24,8 +24,7 @@ pause_error()
 install_requirements()
 {
 	yum update
-	yum install httpd createrepo rsync epel-release firewalld 
-	-y
+	yum install httpd createrepo rsync epel-release firewalld -y
 }
 
 init_repo()
@@ -111,7 +110,7 @@ main()
 	read -e -p "Enter CENTOS release (6, 6.7, 7, 7.1,...for e.x) and press [ENTER]: " -i "7" OSRELEASE
 	read -e -p "Enter CENTOS repos config file (look at repos_list file for e.x) and press [ENTER]: " -i "repos_list" REPOS_FILE
 	install_requirements
-	read_configfile $OSRELEASE $REPOS_FILE
+	read_configfile_and_run $OSRELEASE $REPOS_FILE
 	echo "******************************************************************************************************"
 	echo "                                       DONE! Restart HTTPD                                            "
 	echo "******************************************************************************************************"
