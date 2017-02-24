@@ -110,8 +110,8 @@ add_owned_pkg_to_repo()
 
 export_gnupg_keys()
 {
-	keyid=gpg --list-keys | awk '/^pub/ { print $2 }' | awk -F'/' '{print $2}'
-	gpg --armor --output public.gpg.key --export $keyid
+	KEYID=$(gpg --list-keys | awk '/^pub/ { print $2 }' | awk -F'/' '{print $2}')
+	gpg --armor --output public.gpg.key --export $KEYID
 	mv public.gpg.key /var/www/html/repos/owned/conf/
 }
 
