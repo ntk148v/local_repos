@@ -82,10 +82,10 @@ keep_repos_uptodate()
 	echo "******************************************************************************************************"
 	echo "                            Schedule Job! Keep your repos up to date                                  "
 	echo "******************************************************************************************************"
-	HOUR-RSYNC=$3
-	MINUTE-RSYNC=$4
-	HOUR-CREATEREPO=$(($HOUR-RSYNC+1))
-	MINUTE-CREATEREPO=$((MINUTE-RSYNC+30))
+	HOURRSYNC=$3
+	MINUTERSYNC=$4
+	HOURCREATEREPO=$((HOURRSYNC+1))
+	MINUTECREATEREPO=$((MINUTERSYNC+30))
 	echo "$MINUTE-RSYNC $HOUR-RSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo "$MINUTE-CREATEREPO $HOUR-CREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2"
 	echo -en "\n"
@@ -104,7 +104,7 @@ read_configfile_and_run()
 		init_repo $RELEASE $line
 		rsync_repos $RELEASE $line
 		keep_repos_uptodate $RELEASE $line $HOUR $MINUTE
-		$HOUR=$(($HOUR+2))
+		$HOUR=$((HOUR+2))
 	done < $REPOS_FILE
 }
 
