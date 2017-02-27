@@ -31,6 +31,7 @@ init_repo()
 {
 	# Create local directory
 	mkdir -p /var/www/html/repos/centos/$1/$2/
+	mkdir -p /var/www/html/repos/epel/7/x86_64
 	while true
 	do
 		# Init database
@@ -38,6 +39,7 @@ init_repo()
 		echo "                    Run command createrepo /var/www/html/repos/centos/$1/$2/                          "
 		echo "******************************************************************************************************"
 		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2/
+		/usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -61,7 +63,9 @@ rsync_repos()
 		echo "                                     Run command rsync                                                "
 		echo "******************************************************************************************************"
 		/usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2
+		/usr/bin/rsync -avz --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/
 		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2
+		/usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -87,6 +91,7 @@ keep_repos_uptodate()
 	MINUTERSYNC=$4
 	HOURCREATEREPO=$((HOURRSYNC+1))
 	MINUTECREATEREPO=$((MINUTERSYNC+30))
+	# Keep Centos repo up-to-date
 	echo "$MINUTERSYNC $HOURRSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
 	echo "$MINUTECREATEREPO $HOURCREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2" >> /etc/crontab
@@ -106,6 +111,10 @@ read_configfile_and_run()
 		init_repo $RELEASE $line
 		rsync_repos $RELEASE $line
 		keep_repos_uptodate $RELEASE $line $HOUR $MINUTE
+		# Keep EPEL up-to-date
+		echo "45 3 * * * /usr/bin/rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+		echo "30 5 * * * /usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+		echo -en "\n"
 		HOUR=$((HOUR+2))
 	done < $REPOS_FILE
 }
