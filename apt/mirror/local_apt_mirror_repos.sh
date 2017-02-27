@@ -147,6 +147,7 @@ main()
 	echo "                 Done! Now you can install package using this repository              	 "
 	echo "**Set up client side: 															         "
  	echo "echo \"deb http://YOUR_REPO_SERVER/repos/ubuntu <osrelease> main\" >> /etc/apt/sources.list"
+ 	echo "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "`apt update 2>&1 |grep NO_PUBKEY |sed -e 's?^.*NO_PUBKEY ??'`" && apt update"
  	echo "apt-get update && apt-get install YOUR_PACKAGE  											 "
 	echo "*******************************************************************************************"
 }
