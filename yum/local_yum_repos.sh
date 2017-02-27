@@ -86,8 +86,9 @@ keep_repos_uptodate()
 	MINUTERSYNC=$4
 	HOURCREATEREPO=$((HOURRSYNC+1))
 	MINUTECREATEREPO=$((MINUTERSYNC+30))
-	echo "$MINUTE-RSYNC $HOUR-RSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
-	echo "$MINUTE-CREATEREPO $HOUR-CREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2"
+	echo "$MINUTERSYNC $HOURRSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
+	echo -en "\n"
+	echo "$MINUTECREATEREPO $HOURCREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
 }
 
