@@ -37,7 +37,7 @@ init_repo()
 		echo "******************************************************************************************************"
 		echo "                    Run command createrepo /var/www/html/repos/centos/$1/$2/                          "
 		echo "******************************************************************************************************"
-		createrepo /var/www/html/repos/centos/$1/$2/
+		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2/
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -61,6 +61,7 @@ rsync_repos()
 		echo "                                     Run command rsync                                                "
 		echo "******************************************************************************************************"
 		/usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2
+		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -105,7 +106,7 @@ read_configfile_and_run()
 		init_repo $RELEASE $line
 		rsync_repos $RELEASE $line
 		keep_repos_uptodate $RELEASE $line $HOUR $MINUTE
-		$HOUR=$((HOUR+2))
+		HOUR=$((HOUR+2))
 	done < $REPOS_FILE
 }
 
