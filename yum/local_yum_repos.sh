@@ -29,9 +29,28 @@ install_requirements()
 
 init_repo()
 {
+	if [[ -f /etc/localrepos-control/init_repo-installed ]]
+	then
+	    echo ""
+	    echo "### This module was already completed. Exiting !"
+	    echo ""
+	    exit 0
+	fi
+
 	# Create local directory
-	mkdir -p /var/www/html/repos/centos/$1/$2/
-	mkdir -p /var/www/html/repos/epel/7/x86_64
+	if [[ -f /var/www/html/repos/centos/$1/$2/ ]]
+	then
+		echo "File /var/www/html/repos/centos/$1/$2/ existed"
+	else
+		mkdir -p /var/www/html/repos/centos/$1/$2/
+	fi
+
+	if [[ -f /var/www/html/repos/epel/7/x86_64 ]]
+	then
+		echo "File /var/www/html/repos/epel/7/x86_64 existed"
+	else
+		mkdir -p /var/www/html/repos/epel/7/x86_64
+	fi
 	while true
 	do
 		# Init database
@@ -53,10 +72,20 @@ init_repo()
 			pause_error
 		fi	
 	done
+	date > /etc/localrepos-control/init_repo-installed
+
 }
 
 rsync_repos()
 {
+	if [[ -f /etc/localrepos-control/rsync_repo-installed ]]
+	then
+	    echo ""
+	    echo "### This module was already completed. Exiting !"
+	    echo ""
+	    exit 0
+	fi
+
 	while true
 	do
 		echo "******************************************************************************************************"
@@ -79,11 +108,21 @@ rsync_repos()
 			pause_error
 		fi	
 	done
+
+	date > /etc/localrepos-control/rsync_repo-installed
 }
 
 
 keep_repos_uptodate()
 {
+	if [[ -f /etc/localrepos-control/keep_repos_uptodate-installed ]]
+	then
+	    echo ""
+	    echo "### This module was already completed. Exiting !"
+	    echo ""
+	    exit 0
+	fi
+
 	echo "******************************************************************************************************"
 	echo "                            Schedule Job! Keep your repos up to date                                  "
 	echo "******************************************************************************************************"
@@ -103,6 +142,7 @@ keep_repos_uptodate()
 	echo -en "\n"
 	echo "$MINUTECREATEREPO $HOURCREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
+	date > /etc/localrepos-control/keep_repos_uptodate-installed
 }
 
 read_configfile_and_run()
@@ -122,7 +162,7 @@ read_configfile_and_run()
 		echo "45 3 * * * /usr/bin/rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
 		echo "30 5 * * * /usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
 		echo -en "\n"
-		HOUR=$((HOUR+2))
+		HOUR=$((HOUR+1))
 	done < $REPOS_FILE
 }
 
