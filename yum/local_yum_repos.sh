@@ -89,8 +89,15 @@ keep_repos_uptodate()
 	echo "******************************************************************************************************"
 	HOURRSYNC=$3
 	MINUTERSYNC=$4
+	if [[ "$HOURRSYNC" -gt 22  ]]
+	then
+		HOURRSYNC=$((HOURRSYNC-8))
+		MINUTERSYNC=$((MINUTERSYNC-15))
+	fi
+
 	HOURCREATEREPO=$((HOURRSYNC+1))
-	MINUTECREATEREPO=$((MINUTERSYNC+30))
+	MINUTECREATEREPO=$((MINUTERSYNC+20))
+
 	# Keep Centos repo up-to-date
 	echo "$MINUTERSYNC $HOURRSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
