@@ -159,12 +159,12 @@ read_configfile_and_run()
 		init_repo $RELEASE $line
 		rsync_repos $RELEASE $line
 		keep_repos_uptodate $RELEASE $line $HOUR $MINUTE
-		# Keep EPEL up-to-date
-		echo "45 3 * * * /usr/bin/rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
-		echo "30 5 * * * /usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
-		echo -en "\n"
 		HOUR=$((HOUR+1))
 	done < $REPOS_FILE
+	# Keep EPEL up-to-date
+	echo "45 3 * * * /usr/bin/rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+	echo "30 5 * * * /usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+	echo -en "\n"
 }
 
 main()
