@@ -147,6 +147,7 @@ keep_repos_uptodate()
 
 read_configfile_and_run()
 {
+	mkdir /etc/localrepos-control/
 	# CONFIG_FILE - list all repos you want to clone
 	RELEASE=$1
 	REPOS_FILE=$2
