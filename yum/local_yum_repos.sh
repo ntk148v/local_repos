@@ -57,8 +57,8 @@ init_repo()
 		echo "******************************************************************************************************"
 		echo "                    Run command createrepo /var/www/html/repos/centos/$1/$2/                          "
 		echo "******************************************************************************************************"
-		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2/
-		/usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/
+		createrepo --update /var/www/html/repos/centos/$1/$2/
+		createrepo --update /var/www/html/repos/epel/7/x86_64/
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -91,10 +91,10 @@ rsync_repos()
 		echo "******************************************************************************************************"
 		echo "                                     Run command rsync                                                "
 		echo "******************************************************************************************************"
-		/usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2
-		/usr/bin/rsync -avz --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/
-		/usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2
-		/usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/
+		rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2
+		rsync -avz --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/
+		createrepo --update /var/www/html/repos/centos/$1/$2
+		createrepo --update /var/www/html/repos/epel/7/x86_64/
 		if [ $? -eq 0 ]
 		then
 			echo "******************************************************************************************************"
@@ -138,9 +138,9 @@ keep_repos_uptodate()
 	MINUTECREATEREPO=$((MINUTERSYNC+20))
 
 	# Keep Centos repo up-to-date
-	echo "$MINUTERSYNC $HOURRSYNC * * * /usr/bin/rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
+	echo "$MINUTERSYNC $HOURRSYNC * * * rsync -avz --exclude='repo*' rsync://mirrors.viethosting.com/centos/$1/$2/ /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
-	echo "$MINUTECREATEREPO $HOURCREATEREPO * * * /usr/bin/createrepo --update /var/www/html/repos/centos/$1/$2" >> /etc/crontab
+	echo "$MINUTECREATEREPO $HOURCREATEREPO * * * createrepo --update /var/www/html/repos/centos/$1/$2" >> /etc/crontab
 	echo -en "\n"
 	date > /etc/localrepos-control/keep_repos_uptodate-installed
 }
@@ -162,8 +162,8 @@ read_configfile_and_run()
 		HOUR=$((HOUR+1))
 	done < $REPOS_FILE
 	# Keep EPEL up-to-date
-	echo "45 3 * * * /usr/bin/rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
-	echo "30 5 * * * /usr/bin/createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+	echo "45 3 * * * rsync -avz --delete --exclude='repo*' --exclude='debug' rsync://mirrors.rit.edu/epel/7/x86_64/ /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
+	echo "30 5 * * * createrepo --update /var/www/html/repos/epel/7/x86_64/" >> /etc/crontab
 	echo -en "\n"
 }
 
